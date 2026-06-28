@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Tasyakuran Aqiqah</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Swiper CSS untuk Efek 3D Galeri -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-bg: #064e3b; /* Dark Emerald */
+            --secondary-bg: #022c22; /* Deeper Green */
+            --gold: #fbbf24;
+            --light-gold: #fde68a;
+            --text-light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(251, 191, 36, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        }
+
+        @keyframes slideUpCover {
+            to { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+        }
+
+        /* Cover Section (Buka Undangan) */
+        #cover {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            transition: all 1s ease-in-out;
+        }
+
+        #cover .ornament {
+            width: 150px;
+            margin-bottom: 2rem;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(251,191,36,0.3));
+        }
+
+        .btn-buka {
+            background-color: var(--gold);
+            color: var(--secondary-bg);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            animation: pulse-glow 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buka:hover {
+            background-color: var(--light-gold);
+            transform: scale(1.05);
+        }
+
+        /* Main Content Structure */
+        #main-content {
+            display: none; /* Hidden until cover is opened */
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .bg-pattern {
+            background-image: radial-gradient(rgba(251, 191, 36, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to bottom, var(--primary-bg), var(--secondary-bg));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin: 1rem 0;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--light-gold);
+        }
+
+        .lantern {
+            position: absolute;
+            top: 20px;
+            font-size: 3rem;
+            color: var(--gold);
+            animation: float 5s ease-in-out infinite;
+        }
+        .lantern.left { left: 10%; }
+        .lantern.right { right: 10%; animation-delay: 1s; }
+
+        /* Gallery / Swiper Section */
+        .swiper-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .mySwiper {
+            width: 280px;
+            height: 380px;
+        }
+
+        @media (min-width: 768px) {
+            .mySwiper {
+                width: 350px;
+                height: 480px;
+            }
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.5);
+            background-color: var(--secondary-bg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .swiper-slide-active img {
+            transform: scale(1.05); /* Sedikit efek zoom saat kartu aktif */
+        }
+
+        /* Detail Section */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin: 2rem 0;
+        }
+
+        .detail-item {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-item i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Scroll Animation Classes */
+        .hidden-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .show-element {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #022019;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY / COVER -->
+    <div id="cover">
+        <i class="fa-solid fa-moon ornament" style="font-size: 5rem; color: var(--gold);"></i>
+        <p style="letter-spacing: 2px; margin-bottom: 10px;">UNDANGAN TASYAKURAN</p>
+        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Aqiqah</h1>
+        <p style="font-size: 1.2rem; color: var(--light-gold);">Ahmad Rayyan Al-Farizi</p>
+        <button class="btn-buka" onclick="bukaUndangan()">
+            <i class="fa-solid fa-envelope-open-text" style="margin-right: 8px;"></i> Buka Undangan
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content">
+        
+        <!-- Hero Section -->
+        <section class="section hero bg-pattern">
+            <i class="fa-solid fa-mosque lantern left"></i>
+            <i class="fa-solid fa-mosque lantern right"></i>
+            
+            <div class="hidden-element">
+                <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+                <p>Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                <br>
+                <p style="max-width: 600px; margin: 0 auto; line-height: 1.8;">
+                    Dengan memohon ridho dan rahmat Allah SWT, kami bermaksud menyelenggarakan syukuran Aqiqah putra pertama kami:
+                </p>
+                <br>
+                <h1 style="font-size: 3rem;">Ahmad Rayyan Al-Farizi</h1>
+                <p style="margin-top: 10px;">Lahir pada: Minggu, 28 Juni 2026</p>
+                <br>
+                <p style="font-size: 0.9rem; font-style: italic; color: var(--light-gold);">
+                    Putra dari Kel. Bapak Fulan & Ibu Fulanah
+                </p>
+            </div>
+        </section>
+
+        <!-- Galeri Foto (Baru Ditambahkan) -->
+        <section class="section">
+            <div class="hidden-element" style="text-align: center; width: 100%;">
+                <h2>Potret Buah Hati</h2>
+                <p style="color: var(--light-gold); margin-top: 10px; font-size: 1.1rem;">Alhamdulillah, anugerah terindah dari Allah SWT.</p>
+                
+                <div class="swiper-container">
+                    <!-- Swiper -->
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <!-- Silakan ganti link gambar di dalam tag img src="" dengan foto asli anak Anda -->
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" alt="Foto Bayi 1">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=600&q=80" alt="Foto Bayi 2">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1554494583-c4e1649bfe71?auto=format&fit=crop&w=600&q=80" alt="Foto Bayi 3">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=600&q=80" alt="Foto Bayi 4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 20px; font-style: italic;"><i class="fa-solid fa-arrows-left-right"></i> Geser kartu untuk melihat foto</p>
+            </div>
+        </section>
+
+        <!-- Doa Section -->
+        <section class="section bg-pattern">
+            <div class="card hidden-element">
+                <i class="fa-solid fa-hands-praying" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h2>Doa Keselamatan</h2>
+                <br>
+                <div class="arabic">بَارَكَ اللهُ لَكَ فِي الْمَوْهُوْبِ لَكَ، وَشَكَرْتَ الْوَاهِبَ، وَبَلَغَ أَشُدَّهُ، وَرُزِقْتَ بِرَّهُ</div>
+                <p style="line-height: 1.8; margin-top: 1rem; color: #cbd5e1;">
+                    "Semoga Allah memberkahimu untuk anak yang diberikan kepadamu. Semoga engkau pun bersyukur kepada Sang Pemberi, dan dia dapat mencapai dewasa, serta engkau dikaruniai kebaikannya."
+                </p>
+            </div>
+        </section>
+
+        <!-- Detail Section -->
+        <section class="section">
+            <div class="hidden-element">
+                <h2>Waktu & Tempat</h2>
+                <p style="margin-top: 10px;">Insya Allah acara akan diselenggarakan pada:</p>
+            </div>
+
+            <div class="card hidden-element" style="margin-top: 2rem;">
+                <div class="detail-item">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <h3>Minggu</h3>
+                    <p>5 Juli 2026</p>
+                </div>
+                
+                <hr style="border: 0; height: 1px; background: rgba(251, 191, 36, 0.2); width: 80%; margin: 0 auto;">
+
+                <div class="detail-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <h3>Pukul</h3>
+                    <p>09.00 WITA - Selesai</p>
+                </div>
+
+                <hr style="border: 0; height: 1px; background: rgba(251, 191, 36, 0.2); width: 80%; margin: 0 auto;">
+
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>Kediaman Kami</h3>
+                    <p>Jl. Jenderal Sudirman No. 123,<br>Kolaka, Sulawesi Tenggara</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Penutup -->
+        <section class="section bg-pattern" style="min-height: 50vh;">
+            <div class="hidden-element" style="max-width: 600px;">
+                <p style="line-height: 1.8;">
+                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada putra kami.
+                </p>
+                <br><br>
+                <p>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                <br>
+                <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem;">Kami yang berbahagia,</h3>
+                <h2 style="margin-top: 10px; font-size: 2rem;">Kel. Bpk. Fulan</h2>
+            </div>
+        </section>
+
+        <footer>
+            <p>Dibuat dengan penuh syukur &copy; 2026</p>
+        </footer>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <!-- JavaScript for Animations -->
+    <script>
+        let swiperInitialized = false;
+
+        // Fungsi untuk tombol Buka Undangan
+        function bukaUndangan() {
+            const cover = document.getElementById('cover');
+            const mainContent = document.getElementById('main-content');
+            
+            // Animasi cover naik ke atas
+            cover.style.animation = 'slideUpCover 1s forwards';
+            
+            // Tampilkan konten utama
+            setTimeout(() => {
+                cover.style.display = 'block'; // Diubah untuk trigger display block terlebih dahulu
+                mainContent.style.display = 'block';
+                
+                // Trigger reflow untuk animasi opacity
+                void mainContent.offsetWidth;
+                mainContent.style.opacity = '1';
+                cover.style.display = 'none'; // Sembunyikan cover sepenuhnya
+                
+                // Mulai observasi scroll setelah undangan dibuka
+                initScrollAnimations();
+
+                // Inisialisasi Swiper (Animasi Kartu 3D Galeri)
+                if (!swiperInitialized) {
+                    new Swiper(".mySwiper", {
+                        effect: "cards",
+                        grabCursor: true,
+                        autoplay: {
+                            delay: 2500, // Durasi 2.5 Detik per foto
+                            disableOnInteraction: false,
+                        },
+                    });
+                    swiperInitialized = true;
+                }
+            }, 800);
+        }
+
+        // Intersection Observer untuk animasi muncul saat di-scroll
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show-element');
+                    }
+                });
+            }, {
+                threshold: 0.15 // Animasi mulai saat 15% elemen terlihat
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden-element');
+            hiddenElements.forEach((el) => observer.observe(el));
+        }
+    </script>
+</body>
+</html>
